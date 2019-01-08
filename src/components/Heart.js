@@ -9,10 +9,6 @@ const Heart = props => {
     strokeWidth: '2px'
   };
 
-  const width = 40;
-  const halfBase = 20;
-  const height = 25;
-
   const { x, y } = props.position;
 
   const leftSide = {

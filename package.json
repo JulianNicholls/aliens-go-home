@@ -1,6 +1,6 @@
 {
-  "name": "cannon-game",
-  "version": "0.1.0",
+  "name": "aliens-go-home",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "prop-types": "^15.6.2",
