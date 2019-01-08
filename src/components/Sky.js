@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { gameWidth } from '../utils/constants';
+import { skyAndGroundWidth } from '../utils/constants';
 
 const Sky = () => {
   const style = {
@@ -12,9 +12,9 @@ const Sky = () => {
   return (
     <rect
       style={style}
-      x={gameWidth / -2}
+      x={skyAndGroundWidth / -2}
       y={100 - gameHeight}
-      width={gameWidth}
+      width={skyAndGroundWidth}
       height={gameHeight}
     />
   );
