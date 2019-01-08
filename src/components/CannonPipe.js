@@ -5,8 +5,8 @@ import { pathFromBezierCurve } from '../utils/formulas';
 
 const CannonPipe = props => {
   const style = {
-    fill: '#999',
-    stroke: '#666',
+    fill: '#777',
+    stroke: '#555',
     strokeWidth: '2px'
   };
 
