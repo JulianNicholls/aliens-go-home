@@ -1,8 +1,10 @@
 # Aliens Go Home!
 
-This is a game developed with React, R%edux, and SVG.
-The three part series starts [here](https://auth0.com/blog/developing-games-with-react-redux-and-svg-part-1/)
-[Part 2](https://auth0.com/blog/developing-games-with-react-redux-and-svg-part-2/)
+This is a game developed with React, Redux, and SVG.
+The three part series starts [here](https://auth0.com/blog/developing-games-with-react-redux-and-svg-part-1/).
+
+[Part 2](https://auth0.com/blog/developing-games-with-react-redux-and-svg-part-2/).
+
 [Part 3](https://auth0.com/blog/developing-games-with-react-redux-and-svg-part-3/)
 
 ## Git client
