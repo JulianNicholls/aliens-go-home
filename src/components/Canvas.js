@@ -11,9 +11,9 @@ import FlyingObject from './FlyingObject';
 // import Heart from './Heart';
 import StartGame from './StartGame';
 import Title from './Title';
+import { gameHeight } from '../utils/constants';
 
 const Canvas = props => {
-  const gameHeight = 1200;
   const viewBox = [
     window.innerWidth / -2,
     100 - gameHeight,

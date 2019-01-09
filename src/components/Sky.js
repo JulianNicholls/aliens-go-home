@@ -1,13 +1,11 @@
 import React from 'react';
 
-import { skyAndGroundWidth } from '../utils/constants';
+import { skyAndGroundWidth, gameHeight } from '../utils/constants';
 
 const Sky = () => {
   const style = {
     fill: '#30abef'
   };
-
-  const gameHeight = 1200;
 
   return (
     <rect

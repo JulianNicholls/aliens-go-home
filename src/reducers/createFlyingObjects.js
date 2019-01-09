@@ -28,8 +28,6 @@ export default state => {
     id
   };
 
-  console.log('create UFO', xPosition);
-
   return {
     ...state,
     gameState: {
