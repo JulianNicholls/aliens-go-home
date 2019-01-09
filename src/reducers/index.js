@@ -6,7 +6,9 @@ import startGame from './startGame';
 const initialGameState = {
   started: false,
   kills: 0,
-  lives: 5
+  lives: 5,
+  flyingObjects: [],
+  lastObjectCreatedAt: new Date()
 };
 
 const initialState = {
