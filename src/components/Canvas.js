@@ -15,7 +15,14 @@ import Title from './Title';
 import Leaderboard from './Leaderboard';
 import { gameHeight } from '../utils/constants';
 
-const Canvas = props => {
+const Canvas = ({
+  angle,
+  trackMouse,
+  gameState,
+  currentPlayer,
+  players,
+  startGame
+}) => {
   const viewBox = [
     window.innerWidth / -2,
     100 - gameHeight,
@@ -23,63 +30,12 @@ const Canvas = props => {
     gameHeight
   ];
 
-  const leaderboard = [
-    {
-      id: 'd4',
-      maxScore: 82,
-      name: 'Ado Kukic',
-      picture: 'https://twitter.com/KukicAdo/profile_image'
-    },
-    {
-      id: 'a1',
-      maxScore: 235,
-      name: 'Bruno Krebs',
-      picture: 'https://twitter.com/brunoskrebs/profile_image'
-    },
-    {
-      id: 'c3',
-      maxScore: 99,
-      name: 'Diego Poza',
-      picture: 'https://twitter.com/diegopoza/profile_image'
-    },
-    {
-      id: 'b2',
-      maxScore: 129,
-      name: 'Jeana Tahnk',
-      picture: 'https://twitter.com/jeanatahnk/profile_image'
-    },
-    {
-      id: 'e5',
-      maxScore: 34,
-      name: 'Jenny Obrien',
-      picture: 'https://twitter.com/jenny_obrien/profile_image'
-    },
-    {
-      id: 'f6',
-      maxScore: 153,
-      name: 'Kim Maida',
-      picture: 'https://twitter.com/KimMaida/profile_image'
-    },
-    {
-      id: 'g7',
-      maxScore: 55,
-      name: 'Luke Oliff',
-      picture: 'https://twitter.com/mroliff/profile_image'
-    },
-    {
-      id: 'h8',
-      maxScore: 146,
-      name: 'Sebastián Peyrott',
-      picture: 'https://twitter.com/speyrott/profile_image'
-    }
-  ];
-
   return (
     <svg
       id="aliens-go-home"
       preserveAspectRatio="xMaxYMax none"
       viewBox={viewBox}
-      onMouseMove={props.trackMouse}
+      onMouseMove={trackMouse}
     >
       <defs>
         <filter id="shadow">
@@ -89,22 +45,22 @@ const Canvas = props => {
 
       <Sky />
       <Ground />
-      <CannonPipe rotation={props.angle} />
+      <CannonPipe rotation={angle} />
       <CannonBase />
       <CurrentScore score={0} />
 
-      {props.gameState.started ? (
-        props.gameState.flyingObjects.map(({ id, position }) => (
+      {gameState.started ? (
+        gameState.flyingObjects.map(({ id, position }) => (
           <FlyingObject key={id} position={position} />
         ))
       ) : (
         <g>
-          <StartGame onClick={() => props.startGame()} />
+          <StartGame onClick={() => startGame()} />
           <Title />
           <Leaderboard
-            currentPlayer={leaderboard[6]}
+            currentPlayer={currentPlayer}
             authenticate={signIn}
-            leaderboard={leaderboard}
+            leaderboard={players}
           />
         </g>
       )}
@@ -128,6 +84,20 @@ Canvas.propTypes = {
       }).isRequired
     ).isRequired
   }).isRequired,
+  currentPlayer: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    maxScore: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    picture: PropTypes.string.isRequired
+  }),
+  players: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      maxScore: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      picture: PropTypes.string.isRequired
+    })
+  ).isRequired,
   startGame: PropTypes.func.isRequired,
   trackMouse: PropTypes.func.isRequired
 };

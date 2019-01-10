@@ -7,8 +7,6 @@ const Rank = props => {
     position: { x, y }
   } = props;
 
-  console.log({ x, y, player });
-
   const rectId = 'rect' + player.rank;
   const clipId = 'clip' + player.rank;
 
