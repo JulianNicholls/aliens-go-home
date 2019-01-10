@@ -6,7 +6,7 @@ import Sky from './Sky';
 import Ground from './Ground';
 import CannonBase from './CannonBase';
 import CannonPipe from './CannonPipe';
-// import CannonBall from './CannonBall';
+import CannonBall from './CannonBall';
 import CurrentScore from './CurrentScore';
 import FlyingObject from './FlyingObject';
 // import Heart from './Heart';
@@ -21,7 +21,8 @@ const Canvas = ({
   gameState,
   currentPlayer,
   players,
-  startGame
+  startGame,
+  shoot
 }) => {
   const viewBox = [
     window.innerWidth / -2,
@@ -36,6 +37,7 @@ const Canvas = ({
       preserveAspectRatio="xMaxYMax none"
       viewBox={viewBox}
       onMouseMove={trackMouse}
+      onClick={shoot}
     >
       <defs>
         <filter id="shadow">
@@ -45,6 +47,11 @@ const Canvas = ({
 
       <Sky />
       <Ground />
+
+      {gameState.cannonballs.map(ball => (
+        <CannonBall key={ball.id} position={ball.position} />
+      ))}
+
       <CannonPipe rotation={angle} />
       <CannonBase />
       <CurrentScore score={0} />
@@ -99,7 +106,8 @@ Canvas.propTypes = {
     })
   ).isRequired,
   startGame: PropTypes.func.isRequired,
-  trackMouse: PropTypes.func.isRequired
+  trackMouse: PropTypes.func.isRequired,
+  shoot: PropTypes.func.isRequired
 };
 
 export default Canvas;

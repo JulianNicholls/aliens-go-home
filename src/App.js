@@ -86,6 +86,10 @@ class App extends Component {
     this.canvasMousePosition = getCanvasPosition(event);
   }
 
+  shoot = () => {
+    this.props.shoot(this.canvasMousePosition);
+  };
+
   render() {
     const { angle, gameState, players, currentPlayer, startGame } = this.props;
 
@@ -97,6 +101,7 @@ class App extends Component {
         players={players}
         startGame={startGame}
         trackMouse={event => this.trackMouse(event)}
+        shoot={this.shoot}
       />
     );
   }
@@ -135,7 +140,8 @@ App.propTypes = {
   moveObjects: PropTypes.func.isRequired,
   startGame: PropTypes.func.isRequired,
   leaderboardLoaded: PropTypes.func.isRequired,
-  loggedIn: PropTypes.func.isRequired
+  loggedIn: PropTypes.func.isRequired,
+  shoot: PropTypes.func.isRequired
 };
 
 App.defaultProps = {
