@@ -1,6 +1,7 @@
 import { calculateAngle } from '../utils/formulas';
 import createFlyingObjects from './createFlyingObjects';
 import moveBalls from './moveCannonballs';
+import checkCollisions from './checkCollisions';
 
 export default (state, action) => {
   if (!state.gameState.started) return state;
@@ -12,12 +13,21 @@ export default (state, action) => {
   const newState = createFlyingObjects(state);
 
   const now = new Date().getTime();
-  const flyingObjects = newState.gameState.flyingObjects.filter(
+  let flyingObjects = newState.gameState.flyingObjects.filter(
     ({ createdAt }) => now - createdAt < 4000
   );
 
   const { x, y } = mousePosition;
   const angle = calculateAngle(0, 0, x, y);
+
+  const destroyed = checkCollisions(cannonballs, flyingObjects);
+  const ballsDestroyed = destroyed.map(({ ballID }) => ballID);
+  const discsDestroyed = destroyed.map(({ discID }) => discID);
+
+  cannonballs = cannonballs.filter(ball => ballsDestroyed.indexOf(ball.id));
+  flyingObjects = flyingObjects.filter(disc => discsDestroyed.indexOf(disc.id));
+
+  const kills = state.gameState.kills + discsDestroyed.length;
 
   return {
     ...newState,
