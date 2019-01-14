@@ -12,10 +12,13 @@ Auth0.configure({
   redirectUri: 'http://localhost:3000/',
   responseType: 'token id_token',
   scope: 'openid profile manage:points',
-  audience: 'http://aliens.reallybigshoe.co.uk'
+  audience: 'http://aliens.reallybigshoe.co.uk',
 });
 
 class App extends Component {
+  socket = null;
+  currentPlayer = null;
+
   componentDidMount() {
     const self = this;
 
@@ -27,44 +30,28 @@ class App extends Component {
         return;
       }
 
-      const profile = Auth0.getProfile();
-      const currentPlayer = {
-        id: profile.sub,
+      self.profile = Auth0.getProfile();
+      self.currentPlayer = {
+        id: self.profile.sub,
         maxScore: 0,
-        name: profile.name,
-        picture: profile.picture
+        name: self.profile.name,
+        picture: self.profile.picture,
       };
 
-      this.props.loggedIn(currentPlayer);
+      this.props.loggedIn(self.currentPlayer);
 
-      const socket = io('http://localhost:3001', {
-        query: `token=${Auth0.getAccessToken()}`
+      self.socket = io('http://localhost:3001', {
+        query: `token=${Auth0.getAccessToken()}`,
       });
 
-      let emitted = false;
-
-      socket.on('players', players => {
+      self.socket.on('players', players => {
         this.props.leaderboardLoaded(players);
 
-        if (emitted) return;
-
-        socket.emit('new-max-score', {
-          id: profile.sub,
-          maxScore: 120,
-          name: profile.name,
-          picture: profile.picture
+        players.forEach(player => {
+          if (player.id === self.currentPlayer.id) {
+            self.currentPlayer.maxScore = player.maxScore;
+          }
         });
-
-        emitted = true;
-
-        setTimeout(() => {
-          socket.emit('new-max-score', {
-            id: profile.sub,
-            maxScore: 222,
-            name: profile.name,
-            picture: profile.picture
-          });
-        }, 5000);
       });
     });
 
@@ -80,6 +67,19 @@ class App extends Component {
     };
 
     window.onresize();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { gameState } = this.props;
+
+    if (!nextProps.gameState.started && gameState.started) {
+      if (this.currentPlayer.maxScore < gameState.kills) {
+        this.socket.emit('new-max-score', {
+          ...this.currentPlayer,
+          maxScore: gameState.kills,
+        });
+      }
+    }
   }
 
   trackMouse(event) {
@@ -117,36 +117,36 @@ App.propTypes = {
       PropTypes.shape({
         position: PropTypes.shape({
           x: PropTypes.number.isRequired,
-          y: PropTypes.number.isRequired
+          y: PropTypes.number.isRequired,
         }).isRequired,
-        id: PropTypes.number.isRequired
+        id: PropTypes.number.isRequired,
       }).isRequired
-    ).isRequired
+    ).isRequired,
   }).isRequired,
   currentPlayer: PropTypes.shape({
     id: PropTypes.string.isRequired,
     maxScore: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    picture: PropTypes.string.isRequired
+    picture: PropTypes.string.isRequired,
   }),
   players: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       maxScore: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
-      picture: PropTypes.string.isRequired
+      picture: PropTypes.string.isRequired,
     })
   ).isRequired,
   moveObjects: PropTypes.func.isRequired,
   startGame: PropTypes.func.isRequired,
   leaderboardLoaded: PropTypes.func.isRequired,
   loggedIn: PropTypes.func.isRequired,
-  shoot: PropTypes.func.isRequired
+  shoot: PropTypes.func.isRequired,
 };
 
 App.defaultProps = {
   currentPlayer: null,
-  players: []
+  players: [],
 };
 
 export default App;
