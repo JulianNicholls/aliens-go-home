@@ -4,9 +4,11 @@ import moveBalls from './moveCannonballs';
 import checkCollisions from './checkCollisions';
 
 export default (state, action) => {
-  if (!state.gameState.started) return state;
+  const { gameState } = state;
 
-  let cannonballs = moveBalls(state.gameState.cannonballs);
+  if (!gameState.started) return state;
+
+  let cannonballs = moveBalls(gameState.cannonballs);
 
   const mousePosition = action.mousePosition || { x: 0, y: 0 };
 
@@ -16,6 +18,17 @@ export default (state, action) => {
   let flyingObjects = newState.gameState.flyingObjects.filter(
     ({ createdAt }) => now - createdAt < 4000
   );
+
+  const lostLife = gameState.flyingObjects.length > flyingObjects.length;
+  let { lives } = gameState;
+  if (lostLife) --lives;
+
+  const started = lives > 0;
+  if (!started) {
+    flyingObjects = [];
+    cannonballs = [];
+    lives = 5;
+  }
 
   const { x, y } = mousePosition;
   const angle = calculateAngle(0, 0, x, y);
@@ -27,15 +40,18 @@ export default (state, action) => {
   cannonballs = cannonballs.filter(ball => ballsDestroyed.indexOf(ball.id));
   flyingObjects = flyingObjects.filter(disc => discsDestroyed.indexOf(disc.id));
 
-  const kills = state.gameState.kills + discsDestroyed.length;
+  const kills = gameState.kills + discsDestroyed.length;
 
   return {
     ...newState,
     gameState: {
       ...newState.gameState,
       flyingObjects,
-      cannonballs
+      cannonballs: [...cannonballs],
+      lives,
+      started,
+      kills,
     },
-    angle
+    angle,
   };
 };

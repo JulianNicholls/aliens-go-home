@@ -9,7 +9,7 @@ import CannonPipe from './CannonPipe';
 import CannonBall from './CannonBall';
 import CurrentScore from './CurrentScore';
 import FlyingObject from './FlyingObject';
-// import Heart from './Heart';
+import Heart from './Heart';
 import StartGame from './StartGame';
 import Title from './Title';
 import Leaderboard from './Leaderboard';
@@ -22,15 +22,24 @@ const Canvas = ({
   currentPlayer,
   players,
   startGame,
-  shoot
+  shoot,
 }) => {
   const viewBox = [
     window.innerWidth / -2,
     100 - gameHeight,
     window.innerWidth,
-    gameHeight
+    gameHeight,
   ];
 
+  const lives = [];
+  for (let i = 0; i < gameState.lives; ++i) {
+    const position = {
+      x: -180 - i * 70,
+      y: 35,
+    };
+
+    lives.push(<Heart key={i} position={position} />);
+  }
   return (
     <svg
       id="aliens-go-home"
@@ -54,7 +63,7 @@ const Canvas = ({
 
       <CannonPipe rotation={angle} />
       <CannonBase />
-      <CurrentScore score={0} />
+      <CurrentScore score={gameState.kills} />
 
       {gameState.started ? (
         gameState.flyingObjects.map(({ id, position }) => (
@@ -71,6 +80,8 @@ const Canvas = ({
           />
         </g>
       )}
+
+      {lives}
     </svg>
   );
 };
@@ -85,29 +96,29 @@ Canvas.propTypes = {
       PropTypes.shape({
         position: PropTypes.shape({
           x: PropTypes.number.isRequired,
-          y: PropTypes.number.isRequired
+          y: PropTypes.number.isRequired,
         }).isRequired,
-        id: PropTypes.number.isRequired
+        id: PropTypes.number.isRequired,
       }).isRequired
-    ).isRequired
+    ).isRequired,
   }).isRequired,
   currentPlayer: PropTypes.shape({
     id: PropTypes.string.isRequired,
     maxScore: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    picture: PropTypes.string.isRequired
+    picture: PropTypes.string.isRequired,
   }),
   players: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       maxScore: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
-      picture: PropTypes.string.isRequired
+      picture: PropTypes.string.isRequired,
     })
   ).isRequired,
   startGame: PropTypes.func.isRequired,
   trackMouse: PropTypes.func.isRequired,
-  shoot: PropTypes.func.isRequired
+  shoot: PropTypes.func.isRequired,
 };
 
 export default Canvas;
