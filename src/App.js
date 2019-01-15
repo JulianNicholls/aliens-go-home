@@ -4,7 +4,7 @@ import * as Auth0 from 'auth0-web';
 import io from 'socket.io-client';
 
 import Canvas from './components/Canvas';
-import { getCanvasPosition } from './utils/formulas';
+import { canvasPosition } from './utils/formulas';
 
 Auth0.configure({
   domain: process.env.REACT_APP_CLIENT_DOMAIN,
@@ -83,7 +83,7 @@ class App extends Component {
   }
 
   trackMouse(event) {
-    this.canvasMousePosition = getCanvasPosition(event);
+    this.canvasMousePosition = canvasPosition(event);
   }
 
   shoot = () => {

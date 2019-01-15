@@ -1,5 +1,5 @@
 import { DROP_TIME } from '../utils/constants';
-import { calculateAngle } from '../utils/formulas';
+import { angleTo } from '../utils/formulas';
 import createFlyingObjects from './createFlyingObjects';
 import moveBalls from './moveCannonballs';
 import checkCollisions from './checkCollisions';
@@ -32,7 +32,7 @@ export default (state, action) => {
   }
 
   const { x, y } = mousePosition;
-  const angle = calculateAngle(0, 0, x, y);
+  const angle = angleTo(0, 0, x, y);
 
   const destroyed = checkCollisions(cannonballs, ufos);
   const ballsDestroyed = destroyed.map(({ ballID }) => ballID);

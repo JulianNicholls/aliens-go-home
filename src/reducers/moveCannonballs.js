@@ -1,4 +1,4 @@
-import { calculateNextPosition } from '../utils/formulas';
+import { nextPosition } from '../utils/formulas';
 
 export default balls =>
   balls
@@ -9,8 +9,8 @@ export default balls =>
     .map(ball => {
       const {
         angle,
-        position: { x, y }
+        position: { x, y },
       } = ball;
 
-      return { ...ball, position: calculateNextPosition(x, y, angle, 5) };
+      return { ...ball, position: nextPosition(x, y, angle, 5) };
     });
