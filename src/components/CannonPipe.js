@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 import { pathFromBezierCurve } from '../utils/formulas';
 
-const CannonPipe = props => {
+const CannonPipe = ({ rotation }) => {
   const style = {
     fill: '#777',
     stroke: '#555',
-    strokeWidth: '2px'
+    strokeWidth: '2px',
   };
 
-  const transform = `rotate(${props.rotation}, 0, 0)`;
+  const transform = `rotate(${rotation}, 0, 0)`;
 
   const width = 40;
   const halfWidth = 20;
@@ -21,7 +21,7 @@ const CannonPipe = props => {
     initialAxis: { x: -halfWidth, y: -yBasis },
     initialControlPoint: { x: -40, y: height * 1.7 },
     endingControlPoint: { x: 80, y: height * 1.7 },
-    endingAxis: { x: width, y: 0 }
+    endingAxis: { x: width, y: 0 },
   };
 
   return (
@@ -39,7 +39,7 @@ const CannonPipe = props => {
 };
 
 CannonPipe.propTypes = {
-  rotation: PropTypes.number.isRequired
+  rotation: PropTypes.number.isRequired,
 };
 
 export default CannonPipe;

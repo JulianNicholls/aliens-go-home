@@ -2,27 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { pathFromBezierCurve } from '../utils/formulas';
 
-const Heart = props => {
+const Heart = ({ position: { x, y } }) => {
   const style = {
     fill: '#da0d15',
     stroke: '#a51708',
-    strokeWidth: '2px'
+    strokeWidth: '2px',
   };
-
-  const { x, y } = props.position;
 
   const leftSide = {
     initialAxis: { x, y },
     initialControlPoint: { x: -20, y: -20 },
     endingControlPoint: { x: -40, y: 10 },
-    endingAxis: { x: 0, y: 40 }
+    endingAxis: { x: 0, y: 40 },
   };
 
   const rightSide = {
     initialAxis: { x, y },
     initialControlPoint: { x: 20, y: -20 },
     endingControlPoint: { x: 40, y: 10 },
-    endingAxis: { x: 0, y: 40 }
+    endingAxis: { x: 0, y: 40 },
   };
 
   return (
@@ -36,8 +34,8 @@ const Heart = props => {
 Heart.propTypes = {
   position: PropTypes.shape({
     x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired
-  }).isRequired
+    y: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default Heart;

@@ -20,8 +20,7 @@ const Move = styled.g`
   animation: ${moveVertically} ${DROP_TIME}ms linear;
 `;
 
-const FlyingObject = props => {
-  const { position } = props;
+const FlyingObject = ({ position }) => {
   return (
     <Move>
       <FlyingObjectBase position={position} />
@@ -33,8 +32,8 @@ const FlyingObject = props => {
 FlyingObject.propTypes = {
   position: PropTypes.shape({
     x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired
-  }).isRequired
+    y: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default FlyingObject;

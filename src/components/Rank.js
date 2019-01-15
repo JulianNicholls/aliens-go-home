@@ -1,12 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Rank = props => {
-  const {
-    player,
-    position: { x, y }
-  } = props;
-
+const Rank = ({ player, position: { x, y } }) => {
   const rectId = 'rect' + player.rank;
   const clipId = 'clip' + player.rank;
 
@@ -15,7 +10,7 @@ const Rank = props => {
     fontFamily: '"Joti One", cursive',
     fontSize: 35,
     fill: '#e3e3e3',
-    cursor: 'default'
+    cursor: 'default',
   };
 
   if (player.currentPlayer) textStyle.fill = '#e9ea64';
@@ -25,7 +20,7 @@ const Rank = props => {
     x: x - 140,
     y: y - 40,
     href: player.picture,
-    clipPath: `url(#${clipId})`
+    clipPath: `url(#${clipId})`,
   };
 
   const frameProperties = {
@@ -33,7 +28,7 @@ const Rank = props => {
     height: 55,
     rx: 30,
     x: pictureProperties.x,
-    y: pictureProperties.y
+    y: pictureProperties.y,
   };
 
   return (
@@ -67,12 +62,12 @@ Rank.propTypes = {
     name: PropTypes.string.isRequired,
     picture: PropTypes.string.isRequired,
     rank: PropTypes.number,
-    currentPlayer: PropTypes.bool.isRequired
+    currentPlayer: PropTypes.bool.isRequired,
   }).isRequired,
   position: PropTypes.shape({
     x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired
-  }).isRequired
+    y: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default Rank;

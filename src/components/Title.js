@@ -5,14 +5,14 @@ const Title = () => {
   const style = {
     fontFamily: '"Joti One", cursive',
     fontSize: 120,
-    fill: '#cbca62'
+    fill: '#cbca62',
   };
 
   const AliensLineCurve = {
     initialAxis: { x: -190, y: -950 },
     initialControlPoint: { x: 95, y: -50 },
     endingControlPoint: { x: 285, y: -50 },
-    endingAxis: { x: 380, y: 0 }
+    endingAxis: { x: 380, y: 0 },
   };
 
   const goHomeLineCurve = {
@@ -20,7 +20,7 @@ const Title = () => {
     initialAxis: { x: -250, y: -780 },
     initialControlPoint: { x: 125, y: -90 },
     endingControlPoint: { x: 375, y: -90 },
-    endingAxis: { x: 500, y: 0 }
+    endingAxis: { x: 500, y: 0 },
   };
 
   return (
@@ -31,7 +31,7 @@ const Title = () => {
       </defs>
 
       <text {...style}>
-        <textPath xlinkHref="#AliensPath">Aliens,</textPath>
+        <textPath xlinkHref="#AliensPath">Aliens</textPath>
       </text>
 
       <text {...style}>

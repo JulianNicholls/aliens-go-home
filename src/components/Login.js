@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Login = props => {
+const Login = ({ authenticate }) => {
   const button = {
     x: -300,
     y: -600,
@@ -9,9 +9,9 @@ const Login = props => {
     height: 300,
     style: {
       fill: 'transparent',
-      cursor: 'pointer'
+      cursor: 'pointer',
     },
-    onClick: props.authenticate
+    onClick: authenticate,
   };
 
   const text = {
@@ -22,9 +22,9 @@ const Login = props => {
       fontFamily: '"Joti One", cursive',
       fontSize: 45,
       fill: '#e3e3e3',
-      cursor: 'pointer'
+      cursor: 'pointer',
     },
-    onClick: props.authenticate
+    onClick: authenticate,
   };
 
   return (
@@ -36,7 +36,7 @@ const Login = props => {
 };
 
 Login.propTypes = {
-  authenticate: PropTypes.func.isRequired
+  authenticate: PropTypes.func.isRequired,
 };
 
 export default Login;
