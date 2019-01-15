@@ -20,6 +20,7 @@ class App extends Component {
   currentPlayer = null;
 
   componentDidMount() {
+    const { loggedIn, leaderboardLoaded, moveObjects } = this.props;
     const self = this;
 
     Auth0.handleAuthCallback();
@@ -38,14 +39,14 @@ class App extends Component {
         picture: self.profile.picture,
       };
 
-      this.props.loggedIn(self.currentPlayer);
+      loggedIn(self.currentPlayer);
 
       self.socket = io('http://localhost:3001', {
         query: `token=${Auth0.getAccessToken()}`,
       });
 
       self.socket.on('players', players => {
-        this.props.leaderboardLoaded(players);
+        leaderboardLoaded(players);
 
         players.forEach(player => {
           if (player.id === self.currentPlayer.id) {
@@ -56,7 +57,7 @@ class App extends Component {
     });
 
     setInterval(() => {
-      self.props.moveObjects(self.canvasMousePosition);
+      moveObjects(self.canvasMousePosition);
     }, 16);
 
     window.onresize = () => {
