@@ -3,8 +3,8 @@ import {
   START_GAME,
   LEADERBOARD_LOADED,
   LOGGED_IN,
-  SHOOT
-} from '../actions';
+  SHOOT,
+} from '../actions/types';
 
 import moveObjects from './moveObjects';
 import startGame from './startGame';
@@ -18,12 +18,12 @@ const initialGameState = {
   lastObjectCreatedAt: new Date(),
   currentPlayer: null,
   players: null,
-  cannonballs: []
+  cannonballs: [],
 };
 
 const initialState = {
   angle: 45,
-  gameState: initialGameState
+  gameState: initialGameState,
 };
 
 function reducer(state = initialState, action) {
