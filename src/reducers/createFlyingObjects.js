@@ -17,10 +17,8 @@ export default state => {
   if (!createNewObject) return state;
 
   const id = now;
-  const predefinedPosition = Math.floor(
-    Math.random() * UFOStarterPositions.length
-  );
-  const xPosition = UFOStarterPositions[predefinedPosition];
+  const newPosition = Math.floor(Math.random() * UFOStarterPositions.length);
+  const xPosition = UFOStarterPositions[newPosition];
   const newFlyingObject = {
     position: {
       x: xPosition,

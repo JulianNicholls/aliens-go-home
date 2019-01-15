@@ -1,10 +1,10 @@
 import { gameHeight, DROP_TIME } from '../utils/constants';
 import { checkCollision } from '../utils/formulas';
 
-const checkCollisions = (cannonballs, flyingDiscs) => {
+const checkCollisions = (cannonballs, ufos) => {
   const destroyed = [];
 
-  flyingDiscs.forEach(disc => {
+  ufos.forEach(disc => {
     const lifeTime = new Date().getTime() - disc.createdAt;
     const position = {
       x: disc.position.x,

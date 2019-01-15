@@ -16,17 +16,17 @@ export default (state, action) => {
   const newState = createFlyingObjects(state);
 
   const now = new Date().getTime();
-  let flyingObjects = newState.gameState.flyingObjects.filter(
+  let ufos = newState.gameState.flyingObjects.filter(
     ({ createdAt }) => now - createdAt < DROP_TIME
   );
 
-  const lostLife = gameState.flyingObjects.length > flyingObjects.length;
+  const lostLife = gameState.flyingObjects.length > ufos.length;
   let { lives } = gameState;
   if (lostLife) --lives;
 
   const started = lives > 0;
   if (!started) {
-    flyingObjects = [];
+    ufos = [];
     cannonballs = [];
     lives = 5;
   }
@@ -34,20 +34,20 @@ export default (state, action) => {
   const { x, y } = mousePosition;
   const angle = calculateAngle(0, 0, x, y);
 
-  const destroyed = checkCollisions(cannonballs, flyingObjects);
+  const destroyed = checkCollisions(cannonballs, ufos);
   const ballsDestroyed = destroyed.map(({ ballID }) => ballID);
-  const discsDestroyed = destroyed.map(({ discID }) => discID);
+  const ufosDestroyed = destroyed.map(({ discID }) => discID);
 
   cannonballs = cannonballs.filter(ball => ballsDestroyed.indexOf(ball.id));
-  flyingObjects = flyingObjects.filter(disc => discsDestroyed.indexOf(disc.id));
+  ufos = ufos.filter(ufo => ufosDestroyed.indexOf(ufo.id));
 
-  const kills = gameState.kills + discsDestroyed.length;
+  const kills = gameState.kills + ufosDestroyed.length;
 
   return {
     ...newState,
     gameState: {
       ...newState.gameState,
-      flyingObjects,
+      flyingObjects: ufos,
       cannonballs: [...cannonballs],
       lives,
       started,

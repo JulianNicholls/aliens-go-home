@@ -11,7 +11,7 @@ export default (state, action) => {
   const { x, y } = action.mousePosition;
   const angle = calculateAngle(0, 0, x, y);
   const id = new Date().getTime();
-  const cannonBall = {
+  const newBall = {
     position: { x: 0, y: 0 },
     angle,
     id,
@@ -21,7 +21,7 @@ export default (state, action) => {
     ...state,
     gameState: {
       ...state.gameState,
-      cannonballs: [...cannonballs, cannonBall],
+      cannonballs: [...cannonballs, newBall],
     },
   };
 };
