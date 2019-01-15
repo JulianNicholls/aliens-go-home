@@ -1,3 +1,4 @@
+import { DROP_TIME } from '../utils/constants';
 import { calculateAngle } from '../utils/formulas';
 import createFlyingObjects from './createFlyingObjects';
 import moveBalls from './moveCannonballs';
@@ -16,7 +17,7 @@ export default (state, action) => {
 
   const now = new Date().getTime();
   let flyingObjects = newState.gameState.flyingObjects.filter(
-    ({ createdAt }) => now - createdAt < 4000
+    ({ createdAt }) => now - createdAt < DROP_TIME
   );
 
   const lostLife = gameState.flyingObjects.length > flyingObjects.length;

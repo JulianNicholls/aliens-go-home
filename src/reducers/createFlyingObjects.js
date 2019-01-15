@@ -1,8 +1,8 @@
 import {
   createInterval,
-  flyingObjectsStarterYAxis,
-  flyingObjectsStarterPositions,
-  maxFlyingObjects
+  UFOStartY,
+  UFOStarterPositions,
+  maxUFOs,
 } from '../utils/constants';
 
 export default state => {
@@ -12,20 +12,22 @@ export default state => {
   const { lastObjectCreatedAt, flyingObjects } = state.gameState;
   const createNewObject =
     now - lastObjectCreatedAt.getTime() > createInterval &&
-    flyingObjects.length < maxFlyingObjects;
+    flyingObjects.length < maxUFOs;
 
   if (!createNewObject) return state;
 
   const id = now;
-  const predefinedPosition = Math.floor(Math.random() * maxFlyingObjects);
-  const xPosition = flyingObjectsStarterPositions[predefinedPosition];
+  const predefinedPosition = Math.floor(
+    Math.random() * UFOStarterPositions.length
+  );
+  const xPosition = UFOStarterPositions[predefinedPosition];
   const newFlyingObject = {
     position: {
       x: xPosition,
-      y: flyingObjectsStarterYAxis
+      y: UFOStartY,
     },
     createdAt: new Date().getTime(),
-    id
+    id,
   };
 
   return {
@@ -33,7 +35,7 @@ export default state => {
     gameState: {
       ...state.gameState,
       flyingObjects: [...state.gameState.flyingObjects, newFlyingObject],
-      lastObjectCreatedAt: new Date()
-    }
+      lastObjectCreatedAt: new Date(),
+    },
   };
 };

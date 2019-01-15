@@ -4,7 +4,7 @@ import styled, { keyframes } from 'styled-components';
 
 import FlyingObjectBase from './FlyingObjectBase';
 import FlyingObjectTop from './FlyingObjectTop';
-import { gameHeight } from '../utils/constants';
+import { gameHeight, DROP_TIME } from '../utils/constants';
 
 const moveVertically = keyframes`
   0% {
@@ -17,7 +17,7 @@ const moveVertically = keyframes`
 `;
 
 const Move = styled.g`
-  animation: ${moveVertically} 4s linear;
+  animation: ${moveVertically} ${DROP_TIME}ms linear;
 `;
 
 const FlyingObject = props => {

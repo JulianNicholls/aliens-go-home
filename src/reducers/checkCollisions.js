@@ -1,4 +1,4 @@
-import { gameHeight } from '../utils/constants';
+import { gameHeight, DROP_TIME } from '../utils/constants';
 import { checkCollision } from '../utils/formulas';
 
 const checkCollisions = (cannonballs, flyingDiscs) => {
@@ -8,14 +8,14 @@ const checkCollisions = (cannonballs, flyingDiscs) => {
     const lifeTime = new Date().getTime() - disc.createdAt;
     const position = {
       x: disc.position.x,
-      y: disc.position.y + (lifeTime / 4000) * gameHeight
+      y: disc.position.y + (lifeTime / DROP_TIME) * gameHeight,
     };
 
     const rectA = {
       x1: position.x - 40,
       y1: position.y - 10,
       x2: position.x + 40,
-      y2: position.y + 10
+      y2: position.y + 10,
     };
 
     cannonballs.forEach(ball => {
@@ -23,13 +23,13 @@ const checkCollisions = (cannonballs, flyingDiscs) => {
         x1: ball.position.x - 8,
         y1: ball.position.y - 8,
         x2: ball.position.x + 8,
-        y2: ball.position.y + 8
+        y2: ball.position.y + 8,
       };
 
       if (checkCollision(rectA, rectB)) {
         destroyed.push({
           ballID: ball.id,
-          discID: disc.id
+          discID: disc.id,
         });
       }
     });
